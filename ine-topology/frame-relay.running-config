@@ -1,0 +1,121 @@
+# Frame Relay Switch Configuration
+#
+# This is used with my INE to IOU conversion script
+#
+#
+
+hostname FRSW
+!
+frame-relay switching
+!
+interface Serial0/0
+description Connected to R1
+no ip address
+encapsulation frame-relay
+clockrate 64000
+frame-relay intf-type dce
+frame-relay route 102 interface Serial0/1 201
+frame-relay route 103 interface Serial0/2 301
+frame-relay route 104 interface Serial1/0 401
+frame-relay route 105 interface Serial1/1 501
+frame-relay route 113 interface Serial0/3 311
+no shutdown
+!
+interface Serial0/1
+description Connected to R2
+no ip address
+encapsulation frame-relay
+clockrate 64000
+frame-relay intf-type dce
+frame-relay route 201 interface Serial0/0 102
+frame-relay route 203 interface Serial0/2 302
+frame-relay route 204 interface Serial1/0 402
+frame-relay route 205 interface Serial1/1 502
+frame-relay route 213 interface Serial0/3 312
+no shutdown
+!
+interface Serial0/2
+description Connected to R3 S1/0
+no ip address
+encapsulation frame-relay
+clockrate 64000
+frame-relay intf-type dce
+frame-relay route 301 interface Serial0/0 103
+frame-relay route 302 interface Serial0/1 203
+frame-relay route 304 interface Serial1/0 403
+frame-relay route 305 interface Serial1/1 503
+no shutdown
+!
+interface Serial0/3
+description Connected to R3 S1/1
+no ip address
+encapsulation frame-relay
+clockrate 64000
+frame-relay intf-type dce
+frame-relay route 311 interface Serial0/0 113
+frame-relay route 312 interface Serial0/1 213
+frame-relay route 314 interface Serial1/0 413
+frame-relay route 315 interface Serial1/1 513
+no shutdown
+!
+interface Serial1/0
+description Connected to R4
+no ip address
+encapsulation frame-relay
+clockrate 64000
+frame-relay intf-type dce
+frame-relay route 401 interface Serial0/0 104
+frame-relay route 402 interface Serial0/1 204
+frame-relay route 403 interface Serial0/2 304
+frame-relay route 405 interface Serial1/1 504
+frame-relay route 413 interface Serial0/3 314
+no shutdown
+!
+interface Serial1/1
+description Connected to R5
+no ip address
+encapsulation frame-relay
+clockrate 64000
+frame-relay intf-type dce
+frame-relay route 501 interface Serial0/0 105
+frame-relay route 502 interface Serial0/1 205
+frame-relay route 503 interface Serial0/2 305
+frame-relay route 504 interface Serial1/0 405
+frame-relay route 513 interface Serial0/3 315
+no shutdown
+!
+interface Serial1/2
+ description Connected to R6
+ no ip address
+ encapsulation frame-relay
+ serial restart-delay 0
+ clockrate 64000
+ frame-relay intf-type dce
+ frame-relay route 51 interface Serial1/3 51
+ frame-relay route 100 interface Serial1/3 100
+ frame-relay route 101 interface Serial1/3 101
+ frame-relay route 201 interface Serial1/3 201
+ frame-relay route 301 interface Serial1/3 301
+ frame-relay route 401 interface Serial1/3 401
+ no shutdown
+!
+interface Serial1/3
+ description Connected to BB3
+ no ip address
+ encapsulation frame-relay
+ serial restart-delay 0
+ clockrate 64000
+ frame-relay intf-type dce
+ frame-relay route 51 interface Serial1/2 51
+ frame-relay route 100 interface Serial1/2 100
+ frame-relay route 101 interface Serial1/2 101
+ frame-relay route 201 interface Serial1/2 201
+ frame-relay route 301 interface Serial1/2 301
+ frame-relay route 401 interface Serial1/2 401
+ no shutdown
+!
+line con 0
+ exec-timeout 0 0
+ logging synchronous
+end
+
